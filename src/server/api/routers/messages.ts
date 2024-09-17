@@ -16,5 +16,10 @@ export const messageRouter = createTRPCRouter({
             },
         });
         return newMessage
+    }),
+    getMessage: publicProcedure.query(async () => {
+        const messages = await prisma.message.findMany();
+
+        return messages;
     })
 })

@@ -4,12 +4,19 @@ import { useState } from "react";
 import { api } from "~/trpc/react";
 
 export default function Messages() {
+
   const [text, setText] = useState<string>("");
+
+  const utils = api.useUtils();
+
   const addMessage = api.message.addMessage.useMutation({
     onSuccess: async () => {
+      await utils.message.getMessage.invalidate();
       setText("")
     }
   });
+  const { data, isLoading, error } = api.message.getMessage.useQuery();
+  console.log('isLoading: ', isLoading)
 
   return (
     <div className="">
@@ -38,6 +45,14 @@ export default function Messages() {
           </button>
         </form>
       </div>
+      <div>
+      <h1>Messages</h1>
+      <ul>
+        {data?.map((message) => (
+          <li key={message.id}>{message.text}</li>
+        ))}
+      </ul>
+    </div>
     </div>
   );
 }
