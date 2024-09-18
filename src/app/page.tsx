@@ -1,7 +1,7 @@
 import { api, HydrateClient } from "~/trpc/server";
 // import { SignIn, SignInButton, useUser } from "@clerk/nextjs";
 import Header from "./_components/Header";
-import {Post} from './_components/post'
+import Post from './_components/post'
 
 export default async function Home() {
 

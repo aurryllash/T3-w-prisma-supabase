@@ -4,11 +4,15 @@ import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
 export const postRouter = createTRPCRouter({
   create: publicProcedure
-    .input(z.object({ name: z.string().min(1) }))
+    .input(z.object({ 
+      name: z.string().min(1),
+      author_id: z.string()
+     }))
     .mutation(async ({ ctx, input }) => {
       return ctx.db.post.create({
         data: {
           name: input.name,
+          author_id: input.author_id
         },
       });
     }),

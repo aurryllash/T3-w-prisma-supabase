@@ -4,9 +4,10 @@ import { useState } from "react";
 
 import { api } from "~/trpc/react";
 
-export function InputPost() {
+export function InputPost({ author_id }: {author_id: string}) {
   const utils = api.useUtils();
   const [name, setName] = useState("");
+  // const author_id = 123412321;
   const createPost = api.post.create.useMutation({
     onSuccess: async () => {
       await utils.post.invalidate();
@@ -19,7 +20,7 @@ export function InputPost() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          createPost.mutate({ name });
+          createPost.mutate({ name, author_id });
         }}
         className="flex flex-col "
       >

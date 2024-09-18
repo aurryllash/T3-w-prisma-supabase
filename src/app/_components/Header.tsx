@@ -25,8 +25,7 @@ export default function Header() {
                 height={50}
                 alt="profile picture"
               ></Image>
-              {/* <input className="border-none bg-transparent focus:border-none outline-none" type="text" placeholder="Type some post..." /> */}
-              <InputPost></InputPost>
+              <InputPost author_id={user.id}></InputPost>
             </div>
             <SignOutButton />
           </div>
