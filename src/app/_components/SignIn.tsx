@@ -1,17 +1,17 @@
-// "use client"
+"use client";
 
-import { SignIn, SignInButton, useUser } from "@clerk/nextjs";
+import { SignIn, SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
+import { useEffect, useState } from "react";
 
 export default function SignInComp() {
-//   const { user } = useUser();
+  const { isSignedIn, isLoaded } = useUser();
 
-//   console.log('user: ', user)
   return (
     <div>
       <div>
-        <SignInButton />
+        {!isSignedIn && <SignInButton />}
+        {isSignedIn && <SignOutButton />}
       </div>
-      {/* <SignIn path="/sign-in" routing="path" signUpUrl="/sign-up"/> */}
     </div>
   );
 }

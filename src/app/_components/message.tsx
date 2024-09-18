@@ -16,7 +16,6 @@ export default function Messages() {
     }
   });
   const { data, isLoading, error } = api.message.getMessage.useQuery();
-  console.log('isLoading: ', isLoading)
 
   return (
     <div className="">
