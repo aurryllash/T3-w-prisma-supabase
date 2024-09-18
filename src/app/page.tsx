@@ -1,20 +1,21 @@
 import { api, HydrateClient } from "~/trpc/server";
 // import { SignIn, SignInButton, useUser } from "@clerk/nextjs";
-import SignInComp from "./_components/SignIn";
+import Header from "./_components/Header";
+import {Post} from './_components/post'
 
 export default async function Home() {
-  const hello = await api.post.hello({ text: "from tRPC" });
 
   void api.post.getLatest.prefetch();
 
   return (
     <HydrateClient>
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-        <div>
-          {/* <SignInButton /> */}
-          <SignInComp />
+      <main className="flex flex-col justify-center items-center h-screen">
+        <div className="w-full h-full md:max-w-screen-xl  border-x">
+          <div className="">
+          <Header />
+          </div>
+          <Post></Post>
         </div>
-        {/* <SignIn path="/sign-in" routing="path" signUpUrl="/sign-up" /> */}
       </main>
     </HydrateClient>
   );

@@ -24,7 +24,11 @@ export const messageRouter = createTRPCRouter({
     }),
     getMessage: publicProcedure.query(async ({ ctx }) => {
         // const messages = await prisma.message.findMany()
-        const messages = ctx.db.message.findMany();
+        const messages = ctx.db.message.findMany({
+            orderBy: {
+                createdAt: 'desc',
+            },
+        });
 
         return messages;
     })
