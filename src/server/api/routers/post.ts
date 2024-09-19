@@ -37,12 +37,26 @@ export const postRouter = createTRPCRouter({
       })
     ).data.map(filterUserForClient)
 
-    console.log("users: ", users);
     return posts.map(post => ({
       post,
       author: users.find((user) => user.id === post.author_id)
     }));
   }),
+
+  deletePost: publicProcedure
+  .input(z.object({ post_id: z.number() }))
+  .mutation(({ ctx, input }) => {
+
+    const post_id = input.post_id
+
+    const deletedPost = ctx.db.post.delete({
+      where: {
+        id: post_id
+      }
+    });
+
+    return deletedPost;
+  })
 });
 
 const filterUserForClient = (user: User) => {

@@ -11,7 +11,7 @@ export default function Header() {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="w-full md:max-w-screen-xl border-x min-h-20 bg-black">
+      <div className="w-full md:max-w-screen-xl border-x border-slate-400 min-h-20 bg-black">
         <div className="flex justify-end">
         {!isSignedIn && <SignInButton />}
         </div>

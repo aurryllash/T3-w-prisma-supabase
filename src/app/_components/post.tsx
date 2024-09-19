@@ -1,26 +1,10 @@
 // import { api } from "~/trpc/react";
 import { api } from "~/trpc/server";
-import Image from "next/image";
-import { RouterOutputs } from "~/trpc/react";
+import { PostView } from "./postView";
 
-type PostWithUser = RouterOutputs["post"]["getAllPosts"][number];
+export const revalidate = 2
 
-const PostView = ({ post, author }: PostWithUser) => {
-  return (
-    <div key={post.id} className="border-b border-slate-500 p-4">
-      <div>
-        <Image
-          className="border-red rounded-[50%] bg-white"
-          src={author?.profileImageUrl ? author?.profileImageUrl : ""}
-          width={50}
-          height={50}
-          alt="profile picture"
-        ></Image>
-      </div>
-      <li className="p-4">{post.name}</li>
-    </div>
-  );
-};
+
 
 export default async function Post() {
   // const [latestPost] = api.post.getLatest.useSuspenseQuery();
@@ -33,23 +17,7 @@ export default async function Post() {
         <ul>
           {data && data?.length !== 0 ? (
             data.map(({ post, author }) => {
-              // return (
-              //   <div key={post.id} className="border-b border-slate-500 p-4">
-              //     <div>
-              //       <Image
-              //         className="border-red rounded-[50%] bg-white"
-              //         src={
-              //           author?.profileImageUrl ? author?.profileImageUrl : ""
-              //         }
-              //         width={50}
-              //         height={50}
-              //         alt="profile picture"
-              //       ></Image>
-              //     </div>
-              //     <li className="p-4">{post.name}</li>
-              //   </div>
-              // );
-              return <PostView post={post} author={author} key={post.id}/>
+              return <PostView post={post} author={author} key={post.id} />
             })
           ) : (
             <p>There is no posts.</p>
