@@ -3,7 +3,10 @@
 import { api, type RouterOutputs } from "~/trpc/react";
 import Image from "next/image";
 import { TRPCError } from "@trpc/server";
-import router from "next/router";
+import dayjs from "dayjs"
+import relativeTime from "dayjs/plugin/relativeTime"
+
+dayjs.extend(relativeTime)
 
 type PostWithUser = RouterOutputs["post"]["getAllPosts"][number];
 
@@ -11,13 +14,10 @@ interface ExtendedPostWithUser extends PostWithUser {
   fromChild?: (data: number) => void;
 }
 
-export const PostView = ({ post, author}: ExtendedPostWithUser) => {
-
+export const PostView = ({ post, author }: ExtendedPostWithUser) => {
   const deletePost = api.post.deletePost.useMutation({
     onSuccess: async () => {
-    console.log('successfull')
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    window.location.reload();
+      window.location.reload();
     },
     onError: async () => {
       new TRPCError({
@@ -53,7 +53,7 @@ export const PostView = ({ post, author}: ExtendedPostWithUser) => {
         <div className="flex flex-col">
           <div className="flex flex-row">
             <span>{author?.username}</span>
-            <span>{`1 hour ago`}</span>
+            <span className="text-sm text-slate-300">{`${dayjs(post.createdAt).fromNow()}`}</span>
           </div>
           <li>{post.name}</li>
         </div>
