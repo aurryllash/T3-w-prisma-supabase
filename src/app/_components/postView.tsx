@@ -53,7 +53,7 @@ export const PostView = ({ post, author }: ExtendedPostWithUser) => {
         <div className="flex flex-col">
           <div className="flex flex-row">
             <span>{author?.username}</span>
-            <span className="text-sm text-slate-300">{`${dayjs(post.createdAt).fromNow()}`}</span>
+            <span className="text-sm text-slate-300">{` • ${dayjs(post.createdAt).fromNow()}`}</span>
           </div>
           <li>{post.name}</li>
         </div>

@@ -1,7 +1,6 @@
 import { clerkClient, type User } from "@clerk/nextjs/server";
 import { z } from "zod";
-
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { createTRPCRouter, privateProcedure, publicProcedure } from "~/server/api/trpc";
 
 export const postRouter = createTRPCRouter({
   create: publicProcedure
@@ -43,11 +42,12 @@ export const postRouter = createTRPCRouter({
     }));
   }),
 
-  deletePost: publicProcedure
+  deletePost: privateProcedure
   .input(z.object({ post_id: z.number() }))
   .mutation(({ ctx, input }) => {
 
     const post_id = input.post_id
+    const authorId = ctx.currentUser.userId;
 
     const deletedPost = ctx.db.post.delete({
       where: {

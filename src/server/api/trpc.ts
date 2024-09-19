@@ -1,12 +1,13 @@
 /**
  * YOU PROBABLY DON'T NEED TO EDIT THIS FILE, UNLESS:
  * 1. You want to modify request context (see Part 1).
- * 2. You want to create a new middleware or type of procedure (see Part 3).
+ * 2. You want to create a new middleware or type of procedure (see Part 3). 
  *
  * TL;DR - This is where all the tRPC server stuff is created and plugged in. The pieces you will
  * need to use are documented accordingly near the end.
  */
-import { initTRPC } from "@trpc/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
+import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
@@ -24,10 +25,13 @@ import { db } from "~/server/db";
  *
  * @see https://trpc.io/docs/server/context
  */
-export const createTRPCContext = async (opts: { headers: Headers }) => {
+export const createTRPCContext = (opts: { headers: Headers }) => {
+  const sesh = auth()
+  
   return {
     db,
     ...opts,
+    currentUser: sesh
   };
 };
 
@@ -104,3 +108,22 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
  * are logged in.
  */
 export const publicProcedure = t.procedure.use(timingMiddleware);
+
+const enforceUserIsAuthed = t.middleware(async ({ next, ctx }) => {
+
+  if(!ctx.currentUser.userId) {
+    throw new TRPCError({
+      code: "UNAUTHORIZED"
+    })
+  }
+  console.log("TRPC HIIIIIII")
+
+  return next({
+    ctx: {
+      currentUser: ctx.currentUser
+    }
+  });
+});
+
+export const privateProcedure = t.procedure.use(enforceUserIsAuthed)
+

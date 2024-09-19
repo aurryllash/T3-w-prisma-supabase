@@ -5,7 +5,7 @@ import { type Metadata } from "next";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import { ClerkProvider } from "@clerk/nextjs";
-import Header from "./_components/Header";
+import Header from "./_components/Header/Header";
 
 export const metadata: Metadata = {
   title: "Create T3 App",

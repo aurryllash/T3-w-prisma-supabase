@@ -2,12 +2,25 @@
 
 import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
-import User from "../utils/user";
+import User from "../../utils/user";
 import { InputPost } from "./input";
+import Loading from "./loading"
+import { useEffect, useState } from "react";
 
 export default function Header() {
   const { user, isSignedIn, isLoaded } = useUser();
+  const [loading, setLoading] = useState(true);
   const imageUrl = User();
+
+  useEffect(() => {
+    if(isLoaded) {
+      setLoading(false)
+    }
+  }, [isLoaded])
+
+  if(loading) {
+    return <Loading />
+  }
 
   return (
     <div className="flex flex-col items-center">

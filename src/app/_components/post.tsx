@@ -10,9 +10,6 @@ export default async function Post() {
   // const [latestPost] = api.post.getLatest.useSuspenseQuery();
   // const { data } = api.post.getAllPosts.useQuery();
   const data = await api.post.getAllPosts();
-  const deletePost = api.post.deletePost({
-    post_id: 12
-  });
 
   return (
     <div className="w-full">
