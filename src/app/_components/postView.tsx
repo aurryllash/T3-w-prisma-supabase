@@ -5,6 +5,8 @@ import Image from "next/image";
 import { TRPCError } from "@trpc/server";
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
+import Link from "next/link";
+import { auth } from "@clerk/nextjs/server";
 
 dayjs.extend(relativeTime)
 
@@ -43,6 +45,7 @@ export const PostView = ({ post, author }: ExtendedPostWithUser) => {
       className="flex justify-between gap-3 border-b border-slate-500 p-4"
     >
       <div className="flex gap-5">
+        <Link href={`@${author?.id}`}>
         <Image
           className="border-red rounded-[50%] bg-white"
           src={author?.profileImageUrl ? author?.profileImageUrl : ""}
@@ -50,6 +53,7 @@ export const PostView = ({ post, author }: ExtendedPostWithUser) => {
           height={50}
           alt="profile picture"
         ></Image>
+        </Link>
         <div className="flex flex-col">
           <div className="flex flex-row">
             <span>{author?.username}</span>
