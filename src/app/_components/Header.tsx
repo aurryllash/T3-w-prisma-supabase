@@ -1,7 +1,6 @@
 "use client";
 
-import { SignIn, SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
-import { useEffect, useState } from "react";
+import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import User from "../utils/user";
 import { InputPost } from "./input";
@@ -12,13 +11,15 @@ export default function Header() {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="w-full md:max-w-screen-xl  border-x">
+      <div className="w-full md:max-w-screen-xl border-x min-h-20 bg-black">
+        <div className="flex justify-end">
         {!isSignedIn && <SignInButton />}
+        </div>
         {isSignedIn && (
-          <div className="flex justify-between w-full border-b border-slate-400 p-4">
-            <div className="flex gap-3">
+          <div className="flex justify-between border-b border-slate-400 p-4  min-h-10">
+            <div className="flex flex-row">
               <Image
-                className="border-red rounded-lg bg-white"
+                className="border-red rounded-[50%]"
                 src={imageUrl}
                 width={50}
                 height={50}
