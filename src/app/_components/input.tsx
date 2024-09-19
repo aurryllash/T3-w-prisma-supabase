@@ -10,7 +10,8 @@ export function InputPost({ author_id }: {author_id: string}) {
   // const author_id = 123412321;
   const createPost = api.post.create.useMutation({
     onSuccess: async () => {
-      await utils.post.invalidate();
+      //await utils.post.invalidate();
+      window.location.reload();
       setName("");
     },
   });
