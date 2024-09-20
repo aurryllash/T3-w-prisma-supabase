@@ -2,10 +2,6 @@
 import { api } from "~/trpc/server";
 import { PostView } from "./postView";
 
-export const revalidate = 2
-
-
-
 export default async function Post() {
   // const [latestPost] = api.post.getLatest.useSuspenseQuery();
   // const { data } = api.post.getAllPosts.useQuery();

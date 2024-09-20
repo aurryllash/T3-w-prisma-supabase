@@ -23,7 +23,6 @@ export default function Messages() {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            console.log(text);
             addMessage.mutate({ text })
           }}
           className="flex flex-col gap-2"

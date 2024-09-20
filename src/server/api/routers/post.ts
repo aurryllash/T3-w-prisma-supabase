@@ -1,5 +1,6 @@
 import { clerkClient, type User } from "@clerk/nextjs/server";
 import { z } from "zod";
+import { filterUserForClient } from "~/app/utils/filterUserForClient";
 import { createTRPCRouter, privateProcedure, publicProcedure } from "~/server/api/trpc";
 
 export const postRouter = createTRPCRouter({
@@ -47,7 +48,7 @@ export const postRouter = createTRPCRouter({
   .mutation(({ ctx, input }) => {
 
     const post_id = input.post_id
-    const authorId = ctx.currentUser.userId;
+    // const authorId = ctx.currentUser.userId;
 
     const deletedPost = ctx.db.post.delete({
       where: {
@@ -58,12 +59,4 @@ export const postRouter = createTRPCRouter({
     return deletedPost;
   })
 });
-
-const filterUserForClient = (user: User) => {
-  return {
-    id: user.id,
-    username: user.username,
-    profileImageUrl: user.imageUrl
-  }
-}
 
