@@ -6,7 +6,7 @@ export default function User() {
     const { user } = useUser();
 
     if(!user)
-        return "/sad/sasd/gdfg";
+        return null;
 
-    return user.imageUrl
+    return user
 }

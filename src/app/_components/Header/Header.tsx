@@ -2,24 +2,23 @@
 
 import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
-import User from "../../utils/user";
 import { InputPost } from "./input";
-import Loading from "./loading"
+import Loading from "./loading";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function Header() {
   const { user, isSignedIn, isLoaded } = useUser();
   const [loading, setLoading] = useState(true);
-  const imageUrl = User();
 
   useEffect(() => {
-    if(isLoaded) {
-      setLoading(false)
+    if (isLoaded) {
+      setLoading(false);
     }
-  }, [isLoaded])
+  }, [isLoaded]);
 
-  if(loading) {
-    return <Loading />
+  if (loading) {
+    return <Loading />;
   }
 
   return (
@@ -35,7 +34,7 @@ export default function Header() {
             <div className="flex flex-row">
               <Image
                 className="border-red rounded-[50%]"
-                src={imageUrl}
+                src={user.imageUrl}
                 width={50}
                 height={50}
                 alt="profile picture"
@@ -45,6 +44,16 @@ export default function Header() {
             <SignOutButton />
           </div>
         )}
+        <nav className="p-4">
+          <ul className="flex flex-row justify-between text-lg">
+            <Link href={'/'}>
+              <li className="bg-slate-200 px-4 rounded-md text-black">Home</li>
+            </Link>
+            <Link href={`/@${user?.id}`}>
+              <li className="bg-slate-200 px-4 rounded-md text-black">Profile</li>
+            </Link>
+          </ul>
+        </nav>
       </div>
     </div>
   );
