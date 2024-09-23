@@ -1,5 +1,6 @@
 import { HydrateClient } from "~/trpc/server";
 import PostList from './_components/postList'
+import { PageLayout } from "./_components/layout";
 
 
 export default async function Home() {
@@ -8,11 +9,9 @@ export default async function Home() {
 
   return (
     <HydrateClient>
-      <main className="flex flex-col justify-center items-center h-screen">
-        <div className="w-full h-full md:max-w-screen-xl  border-x border-slate-400">
-          <PostList></PostList>
-        </div>
-      </main>
+      <PageLayout>
+        <PostList></PostList>
+      </PageLayout>
     </HydrateClient>
   );
 }

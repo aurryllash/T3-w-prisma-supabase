@@ -9,9 +9,10 @@ export default function Post() {
 
   if(isLoading) 
     return <h1 className="flex items-center justify-center">Loading...</h1>
+    
   return (
     <div className="w-full">
-      <div className="flex flex-col">
+      <div className="flex flex-col ">
         <ul>
           {data && data?.length !== 0 ? (
             data.map(({ post, author }) => {

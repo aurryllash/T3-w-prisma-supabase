@@ -7,11 +7,11 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
+import user from "../utils/user";
 
 dayjs.extend(relativeTime);
 
 type PostWithUser = RouterOutputs["post"]["getAllPosts"][number];
-
 interface postViewProps extends PostWithUser {
   refetch: () => void
 }
@@ -31,6 +31,7 @@ export const PostView = ({ post, author, refetch }: postViewProps) => {
       toast.error("Do not have permission");
     },
   });
+  const userData = user();
 
   const handleClick = async () => {
     try {
@@ -45,7 +46,7 @@ export const PostView = ({ post, author, refetch }: postViewProps) => {
   return (
     <div
       key={post.id}
-      className="flex justify-between gap-3 border-b border-slate-500 p-4"
+      className="flex justify-between gap-3 border-b p-4"
     >
       <div className="flex gap-5">
         <Link href={`@${author?.id}`}>
@@ -68,13 +69,13 @@ export const PostView = ({ post, author, refetch }: postViewProps) => {
         </Link>
       </div>
 
-      <button
+      {userData?.firstName && <button
         type="button"
-        className="mb-2 me-2 flex rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700"
+        className="mb-2 me-2 flex rounded-lg border  bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700"
         onClick={handleClick}
       >
         DELETE
-      </button>
+      </button>}
 
       <Toaster position="top-right" reverseOrder={false} />
       <Toaster position="top-right" reverseOrder={false} />
