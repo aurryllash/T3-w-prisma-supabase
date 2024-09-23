@@ -12,10 +12,16 @@ dayjs.extend(relativeTime);
 
 type PostWithUser = RouterOutputs["post"]["getAllPosts"][number];
 
-export const PostView = ({ post, author }: PostWithUser) => {
+interface postViewProps extends PostWithUser {
+  refetch: () => void
+}
+
+export const PostView = ({ post, author, refetch }: postViewProps) => {
+
   const deletePost = api.post.deletePost.useMutation({
     onSuccess: () => {
       toast.success("Successfully toasted!");
+      refetch()
     },
     onError: async () => {
       new TRPCError({
