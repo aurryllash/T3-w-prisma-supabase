@@ -6,6 +6,7 @@ import { type Metadata } from "next";
 import { TRPCReactProvider } from "~/trpc/react";
 import { ClerkProvider } from "@clerk/nextjs";
 import Header from "./_components/Header/Header";
+import { GoogleTagManager } from '@next/third-parties/google'
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -16,9 +17,11 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  
   return (
     <ClerkProvider>
       <html lang="en" className={`${GeistSans.variable}`}>
+      <GoogleTagManager gtmId="GTM-M4K5Z3BP" />
         <body>
           <TRPCReactProvider>
           <Header />

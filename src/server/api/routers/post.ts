@@ -57,6 +57,24 @@ export const postRouter = createTRPCRouter({
     });
 
     return deletedPost;
+  }),
+
+  getById: publicProcedure
+  .input(z.object({
+    user_id: z.string()
+  }))
+  .query(async ({ ctx, input }) => {
+    const { user_id } = input;
+
+    const posts = await ctx.db.post.findMany({
+      where: {
+        author_id: user_id
+      }
+    })
+
+    return posts;
   })
+  
+
 });
 
