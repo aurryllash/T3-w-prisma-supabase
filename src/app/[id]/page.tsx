@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { api } from "~/trpc/server";
-import { PageLayout } from "../_components/layout";
+import PageLayout from "../_components/layout";
 import type { NextPage } from "next";
 import Image from "next/image";
 

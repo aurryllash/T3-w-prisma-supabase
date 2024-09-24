@@ -1,6 +1,6 @@
 import { HydrateClient } from "~/trpc/server";
 import PostList from './_components/postList'
-import { PageLayout } from "./_components/layout";
+import PageLayout from "./_components/layout";
 
 
 export default async function Home() {
