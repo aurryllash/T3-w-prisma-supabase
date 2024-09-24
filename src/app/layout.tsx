@@ -5,7 +5,6 @@ import { type Metadata } from "next";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import { ClerkProvider } from "@clerk/nextjs";
-import Header from "./_components/Header/Header";
 import { GoogleTagManager } from '@next/third-parties/google'
 
 export const metadata: Metadata = {
@@ -24,7 +23,7 @@ export default function RootLayout({
       <GoogleTagManager gtmId="GTM-M4K5Z3BP" />
         <body>
           <TRPCReactProvider>
-          <Header />
+          
           {children}
           </TRPCReactProvider>
         </body>

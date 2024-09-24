@@ -4,6 +4,7 @@ import PageLayout from "../_components/layout";
 import type { NextPage } from "next";
 import Image from "next/image";
 import { fetchAllUsers } from "../utils/fetchUsers";
+import Navigation from "../_components/Header/navigation";
 
 interface PageProps {
   params: {
@@ -48,6 +49,7 @@ const Profile: NextPage<PageProps> = async ({ params }) => {
 
   return (
     <PageLayout>
+      <Navigation />
       <div className="flex flex-col items-start">
         <div className="relative h-48 w-full bg-slate-500">
           <div className="absolute left-1 top-24 flex flex-col items-center gap-4">

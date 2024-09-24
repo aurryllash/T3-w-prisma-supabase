@@ -1,12 +1,14 @@
 "use client";
 
+import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
 
-export default function Navigation({ id }: { id?: string  }) {
-
+export default function Navigation() {
+    const { user, isSignedIn, isLoaded } = useUser();
+    
   const navigation = [
     { title: "Home", path: "/" },
-    { title: "Profile", path: `/@${id}` },
+    { title: "Profile", path: `/@${user?.id}` },
   ];
 
   return (
