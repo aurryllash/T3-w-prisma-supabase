@@ -12,11 +12,10 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-
   const users = await fetchAllUsers();
 
   return users.map((user) => ({
-    id: user
+    id: user,
   }));
 }
 
@@ -49,17 +48,21 @@ const Profile: NextPage<PageProps> = async ({ params }) => {
 
   return (
     <PageLayout>
-      <div className="flex flex-col items-center overflow-hidden">
-        <h1 className="h-full">{data.fullName?.toUpperCase()}</h1>
-        <Image
-          src={data.imageUrl}
-          width={200}
-          height={200}
-          alt={"Profile image"}
-          className="rounded-[50%] border-2 border-slate-200 bg-white"
-        />
+      <div className="flex flex-col items-start">
+        <div className="relative h-48 w-full bg-slate-500">
+          <div className="absolute left-1 top-24 flex flex-col items-center gap-4">
+            <Image
+              src={data.imageUrl}
+              width={200}
+              height={200}
+              alt={"Profile image"}
+              className="rounded-[50%] border-2 border-slate-200 bg-white"
+            />
+            <h1 className="h-full text-2xl">{data.fullName?.toUpperCase()}</h1>
+          </div>
+        </div>
 
-        <ul>
+        {/* <ul>
           {posts && posts?.length !== 0 ? (
             posts.map((post) => {
               return <p key={post.author_id}>{post.name}</p>;
@@ -69,7 +72,7 @@ const Profile: NextPage<PageProps> = async ({ params }) => {
               There is no posts.
             </p>
           )}
-        </ul>
+        </ul> */}
       </div>
     </PageLayout>
   );
