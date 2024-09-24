@@ -3,8 +3,24 @@ import { api } from "~/trpc/server";
 import PageLayout from "../_components/layout";
 import type { NextPage } from "next";
 import Image from "next/image";
+import { fetchAllUsers } from "../utils/fetchUsers";
 
-const Profile: NextPage<{ params: { id: string } }> = async ({ params }) => {
+interface PageProps {
+  params: {
+    id: string;
+  };
+}
+
+export async function generateStaticParams() {
+
+  const users = await fetchAllUsers();
+
+  return users.map((user) => ({
+    id: user
+  }));
+}
+
+const Profile: NextPage<PageProps> = async ({ params }) => {
   const { id } = params;
   const user_id = id.startsWith("%40") ? id.slice(3) : "";
   let data;
@@ -15,14 +31,11 @@ const Profile: NextPage<{ params: { id: string } }> = async ({ params }) => {
       user_id: user_id,
     });
     posts = await api.post.getById({
-      user_id: user_id
-    })
-    if(!data) 
-      return <div>No Users Data</div>
+      user_id: user_id,
+    });
+    if (!data) return <div>No Users Data</div>;
 
-    if(!posts) 
-      return <div>Do not have an posts</div>
-
+    if (!posts) return <div>Do not have an posts</div>;
   } catch (error) {
     if (error instanceof TRPCError) {
       throw new TRPCError({
@@ -38,15 +51,23 @@ const Profile: NextPage<{ params: { id: string } }> = async ({ params }) => {
     <PageLayout>
       <div className="flex flex-col items-center overflow-hidden">
         <h1 className="h-full">{data.fullName?.toUpperCase()}</h1>
-        <Image src={data.imageUrl} width={200} height={200} alt={"Profile image"}  className="border-2 border-slate-200 bg-white rounded-[50%]"/>
+        <Image
+          src={data.imageUrl}
+          width={200}
+          height={200}
+          alt={"Profile image"}
+          className="rounded-[50%] border-2 border-slate-200 bg-white"
+        />
 
         <ul>
           {posts && posts?.length !== 0 ? (
             posts.map((post) => {
-              return <p key={post.author_id}>{ post.name }</p>
+              return <p key={post.author_id}>{post.name}</p>;
             })
           ) : (
-            <p className="flex items-center justify-center">There is no posts.</p>
+            <p className="flex items-center justify-center">
+              There is no posts.
+            </p>
           )}
         </ul>
       </div>

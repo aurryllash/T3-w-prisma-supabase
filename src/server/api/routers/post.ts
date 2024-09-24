@@ -1,4 +1,4 @@
-import { clerkClient, type User } from "@clerk/nextjs/server";
+import { clerkClient } from "@clerk/nextjs/server";
 import { z } from "zod";
 import { filterUserForClient } from "~/app/utils/filterUserForClient";
 import { createTRPCRouter, privateProcedure, publicProcedure } from "~/server/api/trpc";
