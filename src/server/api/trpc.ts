@@ -30,7 +30,8 @@ export const createTRPCContext = (opts: { headers: Headers }) => {
   
   return {
     db,
-    currentUser: sesh
+    currentUser: sesh,
+    ...opts
   };
 };
 
