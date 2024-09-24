@@ -71,8 +71,8 @@ const Profile: NextPage<{ params: { id: string } }> = async ({ params }) => {
 
         <ul>
           {posts && posts?.length !== 0 ? (
-            posts.map((post) => {
-              return <p key={post.author_id}>{ post.name }</p>
+            posts.map((post, index) => {
+              return <p key={index}>{ post.name }</p>
             })
           ) : (
             <p className="flex items-center justify-center">There is no posts.</p>
