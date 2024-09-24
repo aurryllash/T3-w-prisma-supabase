@@ -17,6 +17,7 @@ type PostWithUser = RouterOutputs["post"]["getAllPosts"][number];
 export const PostView = ({ post, author }: PostWithUser) => {
 
   const router = useRouter();
+  const userData = user();
 
   const deletePost = api.post.deletePost.useMutation({
     onSuccess: () => {
@@ -31,8 +32,7 @@ export const PostView = ({ post, author }: PostWithUser) => {
       toast.error("Do not have permission");
     },
   });
-  const userData = user();
-
+  
   const handleClick = async () => {
     try {
       await deletePost.mutateAsync({

@@ -1,8 +1,5 @@
-// "use client"
-
 import { api } from "~/trpc/server";
 import { PostView } from "./postView";
-// import { api } from "~/trpc/react";
 
 export default async function Post() {
 

@@ -1,17 +1,17 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-
 import { api } from "~/trpc/react";
 
 export function InputPost({ author_id }: { author_id: string }) {
   const [name, setName] = useState("");
-  const utils = api.useUtils();
+  const router = useRouter();
   const createPost = api.post.create.useMutation({
     onSuccess: async () => {
       setName("");
-      await utils.post.getAllPosts.refetch()
-    },
+      router.refresh();
+    }, 
   });
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
