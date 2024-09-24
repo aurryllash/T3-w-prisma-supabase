@@ -1,4 +1,4 @@
-import { PageLayout } from "~/app/_components/layout";
+import PageLayout from "~/app/_components/layout";
 
 export default function PostProfile() {
   return (

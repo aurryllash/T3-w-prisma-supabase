@@ -8,20 +8,21 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
 import user from "../utils/user";
+import { useRouter } from "next/navigation";
 
 dayjs.extend(relativeTime);
 
 type PostWithUser = RouterOutputs["post"]["getAllPosts"][number];
-interface postViewProps extends PostWithUser {
-  refetch?: () => void
-}
 
-export const PostView = ({ post, author, refetch }: postViewProps) => {
+export const PostView = ({ post, author }: PostWithUser) => {
+
+  const router = useRouter();
+  const userData = user();
 
   const deletePost = api.post.deletePost.useMutation({
     onSuccess: () => {
       toast.success("Successfully toasted!");
-      // refetch()
+      router.refresh();
     },
     onError: async () => {
       new TRPCError({
@@ -31,8 +32,7 @@ export const PostView = ({ post, author, refetch }: postViewProps) => {
       toast.error("Do not have permission");
     },
   });
-  const userData = user();
-
+  
   const handleClick = async () => {
     try {
       await deletePost.mutateAsync({
