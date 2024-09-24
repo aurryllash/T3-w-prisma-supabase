@@ -15,7 +15,6 @@ dayjs.extend(relativeTime);
 type PostWithUser = RouterOutputs["post"]["getAllPosts"][number];
 
 export const PostView = ({ post, author }: PostWithUser) => {
-
   const router = useRouter();
   const userData = user();
 
@@ -32,7 +31,7 @@ export const PostView = ({ post, author }: PostWithUser) => {
       toast.error("Do not have permission");
     },
   });
-  
+
   const handleClick = async () => {
     try {
       await deletePost.mutateAsync({
@@ -44,38 +43,42 @@ export const PostView = ({ post, author }: PostWithUser) => {
   };
 
   return (
-    <div
-      key={post.id}
-      className="flex justify-between gap-3 border-b p-4"
-    >
-      <div className="flex gap-5">
-        <Link href={`@${author?.id}`}>
-          <Image
-            className="border-red rounded-[50%] bg-white"
-            src={author?.imageUrl ? author?.imageUrl : ""}
-            width={50}
-            height={50}
-            alt="profile picture"
-          ></Image>
-        </Link>
-        <Link href={`/post/${post.id}`}>
+    <div key={post.id} className="flex justify-between gap-3 border-b p-4 pb-10">
+      <div className="w-[90%]">
+        <div className="flex items-center gap-3 mb-4">
+          <Link href={`@${author?.id}`}>
+            <Image
+              className="border-red w-10 rounded-[50%] border-2 border-slate-200 bg-white"
+              src={author?.imageUrl ? author?.imageUrl : ""}
+              width={50}
+              height={50}
+              alt="profile picture"
+            ></Image>
+          </Link>
+
           <div className="flex flex-col">
             <div className="flex flex-row">
-              <span>{author?.fullName?.toLocaleUpperCase()}</span>
+              <span>{author?.fullName?.toUpperCase()}</span>
               <span className="ml-2 text-sm text-slate-300">{` • ${dayjs(post.createdAt).fromNow()}`}</span>
             </div>
-            <li>{post.name}</li>
           </div>
+        </div>
+        <Link href={`/post/${post.id}`}>
+          <li className="rounded-md border-2 border-slate-500 p-3 ml-10 w-[70%]">
+            {post.name}
+          </li>
         </Link>
       </div>
 
-      {userData?.firstName && <button
-        type="button"
-        className="mb-2 me-2 flex rounded-lg border  bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700"
-        onClick={handleClick}
-      >
-        DELETE
-      </button>}
+      {userData?.firstName && (
+        <button
+          type="button"
+          className="mb-2 me-2 flex h-10 items-center rounded-lg border bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700"
+          onClick={handleClick}
+        >
+          DELETE
+        </button>
+      )}
 
       <Toaster position="top-right" reverseOrder={false} />
       <Toaster position="top-right" reverseOrder={false} />

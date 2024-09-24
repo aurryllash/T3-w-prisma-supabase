@@ -4,8 +4,8 @@ import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import { InputPost } from "./input";
 import Loading from "./loading";
-import { useEffect, useState } from "react";
-import Link from "next/link";
+import { Suspense, useEffect, useState } from "react";
+import Navigation from "./navigation";
 
 export default function Header() {
   const { user, isSignedIn, isLoaded } = useUser();
@@ -17,9 +17,9 @@ export default function Header() {
     }
   }, [isLoaded]);
 
-  if (loading) {
-    return <Loading />;
-  }
+  // if (loading) {
+  //   return <Loading />;
+  // }
 
   return (
     <div className="flex flex-col items-center">
@@ -44,16 +44,7 @@ export default function Header() {
             <SignOutButton />
           </div>
         )}
-        <nav className="p-4">
-          <ul className="flex flex-row justify-between text-lg">
-            <Link href={'/'}>
-              <li className="bg-slate-200 px-4 rounded-md text-black">Home</li>
-            </Link>
-            <Link href={`/@${user?.id}`}>
-              <li className="bg-slate-200 px-4 rounded-md text-black">Profile</li>
-            </Link>
-          </ul>
-        </nav>
+          <Navigation id={user?.id} />
       </div>
     </div>
   );
