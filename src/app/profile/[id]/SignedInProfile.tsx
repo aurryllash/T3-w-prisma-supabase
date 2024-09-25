@@ -1,20 +1,9 @@
 import { api } from "~/trpc/server";
 import PageLayout from "../../_components/layout";
-import type { NextPage } from "next";
 import Image from "next/image";
-import { fetchAllUsers } from "../../utils/fetchUsers";
 import Navigation from "../../_components/Header/navigation";
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
-
-const SignedInProfile: NextPage<PageProps> = async ({ params }) => {
-  const { id } = params;
-  const user_id = id.startsWith("%40") ? id.slice(3) : "";
-
+const SignedInProfile = async ({ user_id }: { user_id: string }) => {
   const data = await api.profile.getUserById({
     user_id: user_id,
   });

@@ -16,12 +16,12 @@ export const profileRouter = createTRPCRouter({
 
       const user_data = await clerkClient.users.getUser(user_id);
       
-      if (!user_data) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "User Not Found",
-        });
-      }
+      // if (!user_data) {
+      //   throw new TRPCError({
+      //     code: "NOT_FOUND",
+      //     message: "User Not Found",
+      //   });
+      // }
 
       const user_posts = await ctx.db.post.findMany({
         where: {

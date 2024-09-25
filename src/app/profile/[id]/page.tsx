@@ -16,9 +16,11 @@ export async function generateStaticParams() {
 }
 
 const Profile: NextPage<PageProps> = async ({ params }) => {
+  const { id } = params;
+  const user_id = id.startsWith("%40") ? id.slice(3) : "";
 
   return (
-    <SignedInProfile params={params}/>
+    <SignedInProfile user_id={ user_id }/>
   );
 };
 
