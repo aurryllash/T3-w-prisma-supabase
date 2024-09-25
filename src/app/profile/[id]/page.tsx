@@ -25,10 +25,10 @@ export async function generateStaticParams() {
 const Profile: NextPage<PageProps> = async ({ params }) => {
   const { id } = params;
   const user_id = id.startsWith("%40") ? id.slice(3) : "";
-  if (user_id == 'undefined') {
-    redirect('/');
-    return null;
-  }
+  // if (user_id == 'undefined') {
+  //   redirect('/');
+  //   return null;
+  // }
 
   const data = await api.profile.getUserById({
     user_id: user_id,
