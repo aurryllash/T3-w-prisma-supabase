@@ -26,7 +26,8 @@ export const profileRouter = createTRPCRouter({
       const user_posts = await ctx.db.post.findMany({
         where: {
           author_id: user_id
-        }
+        },
+        orderBy: { createdAt: 'desc' }
       })
 
       return {

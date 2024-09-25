@@ -25,15 +25,11 @@ export async function generateStaticParams() {
 const Profile: NextPage<PageProps> = async ({ params }) => {
   const { id } = params;
   const user_id = id.startsWith("%40") ? id.slice(3) : "";
-  // if (user_id == 'undefined') {
-  //   redirect('/');
-  //   return null;
-  // }
 
   const data = await api.profile.getUserById({
     user_id: user_id,
   });
-  console.log("UUUUUUUUUU")
+
   if (!data) return <div>No Users Data</div>;
 
   if (data.user_posts.length < 1) return <div>Do not have an posts</div>;
@@ -42,7 +38,7 @@ const Profile: NextPage<PageProps> = async ({ params }) => {
     <PageLayout>
       <Navigation />
       <div className="flex flex-col items-start">
-        <div className="relative h-48 w-full bg-slate-500">
+        <div className="relative h-48 w-full bg-slate-500 mb-48">
           <div className="absolute left-1 top-24 flex flex-col items-center gap-4">
             <Image
               src={data.imageUrl}
@@ -55,10 +51,14 @@ const Profile: NextPage<PageProps> = async ({ params }) => {
           </div>
         </div>
 
-        <ul>
+        <ul className="ml-10">
           {data.user_posts && data.user_posts?.length > 0 ? (
             data.user_posts.map((post, index) => {
-              return <p key={index}>{post.name}</p>;
+              return (
+                <li key={index} className="w-[60%] border-2 border-slate-700 rounded-md p-4 mb-10">
+                  <p>{post.name}</p>
+                </li>
+              );
             })
           ) : (
             <p className="flex items-center justify-center">
