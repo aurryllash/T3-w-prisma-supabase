@@ -71,7 +71,7 @@ export const PostView = ({ post, author }: PostWithUser) => {
         </Link>
       </div>
 
-      {userData?.firstName && (
+      {userData && userData.id == author?.id && (
         <button
           type="button"
           className="mb-2 me-2 flex h-10 items-center rounded-lg border bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700"
@@ -79,7 +79,7 @@ export const PostView = ({ post, author }: PostWithUser) => {
         >
           DELETE
         </button>
-      )}
+      )}  
 
       <Toaster position="top-right" reverseOrder={false} />
       <Toaster position="top-right" reverseOrder={false} />

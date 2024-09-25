@@ -45,10 +45,17 @@ export const postRouter = createTRPCRouter({
 
   deletePost: privateProcedure
   .input(z.object({ post_id: z.number() }))
-  .mutation(({ ctx, input }) => {
-
+  .mutation(async ({ ctx, input }) => {
     const post_id = input.post_id
-    // const authorId = ctx.currentUser.userId;
+    const authorId = ctx.currentUser.userId;
+
+    const post = await ctx.db.post.findUnique({
+      where: { id: post_id }
+    })
+    if(!post)
+      throw new Error("Post not found")
+    if(post.author_id !== authorId)
+      throw new Error("You are not authorized to delete this post");
 
     const deletedPost = ctx.db.post.delete({
       where: {
