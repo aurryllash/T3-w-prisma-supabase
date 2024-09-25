@@ -47,7 +47,7 @@ export const PostView = ({ post, author }: PostWithUser) => {
     <div key={post.id} className="flex justify-between gap-3 border-b p-4 pb-10">
       <div className="w-[90%]">
         <div className="flex items-center gap-3 mb-4">
-          <Link href={`@${author?.id}`}>
+          <Link href={`/profile/@${author?.id}`}>
             <Image
               className="border-red w-10 rounded-[50%] border-2 border-slate-200 bg-white"
               src={author?.imageUrl ? author?.imageUrl : profileImage}
