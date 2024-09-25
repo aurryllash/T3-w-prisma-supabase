@@ -3,14 +3,10 @@ import PageLayout from "../../_components/layout";
 import Image from "next/image";
 import Navigation from "../../_components/Header/navigation";
 
-const SignedInProfile = async ({ user_id }: { user_id: string }) => {
+const AuthorProfile = async ({ user_id }: { user_id: string }) => {
   const data = await api.profile.getUserById({
     user_id: user_id,
   });
-
-  if (!data) return <div>No Users Data</div>;
-
-  if (data.user_posts.length < 1) return <div>Do not have an posts</div>;
 
   return (
     <PageLayout>
@@ -51,4 +47,4 @@ const SignedInProfile = async ({ user_id }: { user_id: string }) => {
   );
 };
 
-export default SignedInProfile;
+export default AuthorProfile;

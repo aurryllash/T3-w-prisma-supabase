@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
-import user from "../utils/user";
+import user from "../_utils/user";
 import { useRouter } from "next/navigation";
 import profileImage from "public/images/profile_image/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"
 

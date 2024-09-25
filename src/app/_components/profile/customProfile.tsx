@@ -1,10 +1,13 @@
 import { api } from "~/trpc/server";
-import PageLayout from "../../_components/layout";
+import PageLayout from "../layout";
 import Image from "next/image";
-import Navigation from "../../_components/Header/navigation";
+import Navigation from "../Header/navigation";
+import { notFound } from "next/navigation";
 
-const NotSignedInProfile = async ({ user_id }: { user_id: string }) => {
+const CustomProfile = async ({ user_id }: { user_id: string }) => {
   try {
+
+  
     const data = await api.profile.getUserByIdCustom({
       user_id: user_id,
     });
@@ -28,15 +31,9 @@ const NotSignedInProfile = async ({ user_id }: { user_id: string }) => {
         </div>
       </PageLayout>
     );
-
   } catch(error) {
-    return <div>Something went Wrong</div>
+    notFound();
   }
-
-
-
-
-  
 };
 
-export default NotSignedInProfile;
+export default CustomProfile;
