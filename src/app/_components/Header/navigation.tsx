@@ -8,7 +8,7 @@ export default function Navigation() {
     
   const navigation = [
     { title: "Home", path: "/" },
-    { title: "Profile", path: `/@${user?.id}` },
+    { title: "Profile", path: `/profile/@${user?.id}` },
   ];
 
   return (

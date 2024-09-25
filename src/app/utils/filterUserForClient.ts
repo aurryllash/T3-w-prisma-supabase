@@ -5,6 +5,6 @@ export const filterUserForClient = (user: User) => {
     id: user.id,
     username: user.username,
     imageUrl: user.imageUrl,
-    fullName: user.fullName
+    fullName: user.fullName,
   };
 };

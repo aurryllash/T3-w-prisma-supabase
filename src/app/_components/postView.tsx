@@ -9,6 +9,7 @@ import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
 import user from "../utils/user";
 import { useRouter } from "next/navigation";
+import profileImage from "public/images/profile_image/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg"
 
 dayjs.extend(relativeTime);
 
@@ -49,7 +50,7 @@ export const PostView = ({ post, author }: PostWithUser) => {
           <Link href={`@${author?.id}`}>
             <Image
               className="border-red w-10 rounded-[50%] border-2 border-slate-200 bg-white"
-              src={author?.imageUrl ? author?.imageUrl : ""}
+              src={author?.imageUrl ? author?.imageUrl : profileImage}
               width={50}
               height={50}
               alt="profile picture"

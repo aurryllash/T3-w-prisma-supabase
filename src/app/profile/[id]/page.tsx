@@ -1,10 +1,12 @@
 import { TRPCError } from "@trpc/server";
 import { api } from "~/trpc/server";
-import PageLayout from "../_components/layout";
+import PageLayout from "../../_components/layout";
 import type { NextPage } from "next";
 import Image from "next/image";
-import { fetchAllUsers } from "../utils/fetchUsers";
-import Navigation from "../_components/Header/navigation";
+import { fetchAllUsers } from "../../utils/fetchUsers";
+import Navigation from "../../_components/Header/navigation";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 interface PageProps {
   params: {
@@ -23,29 +25,18 @@ export async function generateStaticParams() {
 const Profile: NextPage<PageProps> = async ({ params }) => {
   const { id } = params;
   const user_id = id.startsWith("%40") ? id.slice(3) : "";
-  let data;
-  let posts;
-
-  try {
-    data = await api.profile.getUserById({
-      user_id: user_id,
-    });
-    posts = await api.post.getById({
-      user_id: user_id,
-    });
-    if (!data) return <div>No Users Data</div>;
-
-    if (!posts) return <div>Do not have an posts</div>;
-  } catch (error) {
-    if (error instanceof TRPCError) {
-      throw new TRPCError({
-        code: "BAD_REQUEST",
-      });
-    } else {
-      console.error("Unexpected Error:", error);
-      return <div>Something went wrong.</div>;
-    }
+  if (user_id == 'undefined') {
+    redirect('/');
+    return null;
   }
+
+  const data = await api.profile.getUserById({
+    user_id: user_id,
+  });
+  console.log("UUUUUUUUUU")
+  if (!data) return <div>No Users Data</div>;
+
+  if (data.user_posts.length < 1) return <div>Do not have an posts</div>;
 
   return (
     <PageLayout>
@@ -64,17 +55,17 @@ const Profile: NextPage<PageProps> = async ({ params }) => {
           </div>
         </div>
 
-        {/* <ul>
-          {posts && posts?.length !== 0 ? (
-            posts.map((post, index) => {
-              return <p key={index}>{ post.name }</p>
+        <ul>
+          {data.user_posts && data.user_posts?.length > 0 ? (
+            data.user_posts.map((post, index) => {
+              return <p key={index}>{post.name}</p>;
             })
           ) : (
             <p className="flex items-center justify-center">
               There is no posts.
             </p>
           )}
-        </ul> */}
+        </ul>
       </div>
     </PageLayout>
   );
